@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Prototype</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="./assets/css/bulma.min.css">
+    </head>
+    <body>
+        <div id="app">
+            <div class="container">
+                    <h2> BE - Berat </h2>
+            <div class="notification">
+
+                <table class="table is-striped is-centered is-hoverable">
+                <tr>
+                    <th v-for="column in columns">
+                        {{column}}
+                    </th>                           
+                </tr>
+                <tr v-for="row in listBerat">
+                    <td> {{ row.tanggal }} </td>
+                    <td> {{ row.max }} </td>
+                    <td> {{ row.min }} </td>
+                    <td> {{ row.max - row.min }} </td>
+                    <td> <a class="button is-info" @click="clickShow(row)"> Show </a> </td>
+                    <td> <a class="button is-danger" @click="clickEdit(row)"> Edit </a> </td>
+                </tr>
+                <tr>
+                    <td> Rata-Rata </td>
+                    <td> {{ avemax }} </td>
+                    <td> {{ avemin }} </td>
+                    <td> {{ avemax-avemin }} </td>
+                    <td>  </td>
+                </tr>
+              </table>
+              <a class="button is-success" @click="clickCreate"> Add Data </a>
+            </div>
+            </div>
+            
+            <!-- Modal for Show Detail -->
+            <div class="modal is-active" v-if="isShow == 1">
+                <div class="modal-background" @click="isShow = false"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Show Detail</p>
+                    </header>
+                    <section class="modal-card-body">
+                        <table class="table is-striped is-hoverable">
+                        <tr>
+                            <th> Tanggal </th>
+                            <th> {{ current.tanggal }} </th>
+                        </tr>
+                        <tr>
+                            <td> Max </td>
+                            <td> {{ current.max }} </td>
+                        </tr>
+                        <tr>
+                            <td> Min </td>
+                            <td> {{ current.min }} </td>
+                        </tr>
+                        <tr>
+                            <td> Perbedaan </td>
+                            <td> {{ current.max - current.min }} </td>
+                        </tr>
+                        </table>
+                    </section>
+                        <footer class="modal-card-foot">
+                            <button class="button is-info" @click="isShow = false">Done</button>
+                        </footer>
+                </div>
+              </div>
+
+
+            <!-- Modal for Edit -->
+              
+            <div class="modal is-active" v-if="isEdit == 1">
+                    <div class="modal-background" @click="isEdit = false"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Edit Berat</p>
+                        </header>
+                        <section class="modal-card-body">
+                            <table class="table is-striped is-hoverable">
+                            <tr>
+                                <th> Tanggal </th>
+                                <th> {{ current.tanggal }} </th>
+                            </tr>
+                            <tr>
+                                <td> Max </td>
+                                <td> 
+                                    <input class="input" type="number" v-model="current.max"> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Min </td>
+                                <td> 
+                                    <input class="input" type="number" v-model="current.min">
+                                </td>
+                            </tr>
+                            </table>
+                        </section>
+                            <footer class="modal-card-foot">
+                                <button class="button is-info" @click="saveEdit()">Save Changes</button>
+                                <button class="button is-danger" @click="clickDelete()">Delete</button>
+                            </footer>
+                    </div>
+                  </div>
+
+            <!-- Modal for Create -->
+              
+            <div class="modal is-active" v-if="isCreate == 1">
+                    <div class="modal-background" @click="isCreate = false"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Add New Data</p>
+                        </header>
+                        <section class="modal-card-body">
+
+                        <table class="table is-striped is-hoverable">
+                                <tr>
+                                    <th> Tanggal </th>
+                                    <th>
+                                        <input class="input" type="text" v-model="current.tanggal"> 
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td> Max </td>
+                                    <td> 
+                                        <input class="input" type="number" v-model="current.max"> 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> Min </td>
+                                    <td> 
+                                        <input class="input" type="number" v-model="current.min">
+                                    </td>
+                                </tr>
+                                </table>
+                        </section>
+                            <footer class="modal-card-foot">
+                                <button class="button is-info" @click="createData()">Create Data</button>
+                            </footer>
+                    </div>
+                  </div>
+        </div>
+
+
+
+        <!-- Vue.JS and Axios -->
+        <script src="./assets/js/vue.js"> </script>
+        <script src="./assets/js/axios.min.js"> </script>
+        <!-- My main.js -->
+        <script src="./assets/js/main.js"> </script>
+        
+    </body>
+</html>
